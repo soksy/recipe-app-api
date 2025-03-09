@@ -1,0 +1,19 @@
+# Docker Compose Syntax version.
+# version: "3.9"
+# Evidently not supported in the docker-compose-plugin I have installed.
+
+services:
+  app:
+    build:
+      context: .
+      args:
+      - DEV=true
+    ports:
+    - "8000:8000"
+    volumes:
+    # This mounts the app into the container, thus reflecting changes in the container in real-time.
+    # Interestingly I thought this would be reflect changes made in the development filesystem in the container
+    # but in fact it's also the otherway around.
+    - ./app:/app
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
